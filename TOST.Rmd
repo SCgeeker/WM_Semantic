@@ -1,0 +1,181 @@
+---
+title: "Reanalyze and rethink the unsuccessful replication of semantic priming"
+author: "Sau-Chin Chen"
+date: "2017-09-03"
+output: html_document
+---
+
+A Belgium psycholinguistic team (Tom Heyman credited the major contribution) published their unsuccessful replication on *[Collabra: Psychology](https://www.collabra.org/article/10.1525/collabra.96/)*. Rolf Zwaan spoke out [the story below the publication of this paper](https://rolfzwaan.blogspot.tw/2017/08/publishing-unsuccessful-self.html). This story reminded me the questions when I watched the results of [their 2015 paper](https://doi.org/10.1037/xlm0000050). Their unsuccessfuly replication gave me the opportunity to answer my questions. This post is the journey what I have found. 
+
+### Strange findings challenged the classical theory
+
+Many theories have explained the causes of semantic priming and have gathered a numerous of positive evidences. Spreading activation is an assumed automatnic mechanism in human mind. When we are unware of a triggered concept, this mechanism has initiated a couple of associated concepts. Spreading activation could be considered as the twin of the semantic priming paradigm, [the paradigm was designed to inspect the mental web of concepts](http://content.apa.org/journals/rev/82/6/407). One strong evidence is the semantic priming effect of forward associative word pairs: the concept of the prime word could highly triggered the concept of the target word but the reverse is negative (e.g., *panda-bear*). On the other hand, the opposite cases, backward associative word pairs (e.g., *bear-panda*), are considered as the associative concepts hardly initiate the spreading activation. Forward associative priming effect was suggested as the concequence of automatic spreading activation, but the backward associative priming effect was considered as the result of conscious strategies. 
+
+[The latest version of spreading activation](http://content.apa.org/books/10394-005) emphasizes the status of attentional resource. When the attentional resource sufficiently support the unconscious cognitive process, the automatic spreading activation could initiate the concepts with strong associations. Till the attentional resource sufficiently supports the counscious process, the awareness of prime concepts would activate the low associated concepts. In 2015, [this team's findings](https://doi.org/10.1037/xlm0000050) showed a beautful pattern implied that the forward associations could be inhibitated till the long SOA condition. However, [their 2017 replication](https://www.collabra.org/article/10.1525/collabra.96/) shaked this sotry at two points: (1) That forward associative priming effect was available at the long SOA refers to the benefit of councious strategy to the forward associations. (2) The insignificant backward associative priming effects across short and long SOA implied that the conscious process would not necessarily initiate the weakly associated concepts.
+
+### Did the unsuccessful replication shake the original evidences?
+
+```{r effects, message=FALSE, warning=FALSE, include=FALSE}
+## library(osfr)
+## library(TOSTER)
+
+## Import the priming efffects data
+orig_DU_osf <- osfr::download(id = '9n587')
+orig_DU_comparisons <- read.csv("orig_DU.csv")
+repli_DU_osf <- osfr::download(id = '6ctyx')
+repli_DU_comparisons <- read.csv("repli_DU.csv")
+repli_EN_osf <- osfr::download(id = '8f5uq')
+repli_EN_comparisons <- read.csv("repli_EN.csv")
+
+## original_study
+## t test and CI of each original priming effect
+Orig_DU_effects <- list(
+### FA
+### SOA 200, High Load
+FA_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,9], orig_DU_comparisons[,8],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+FA_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,21], orig_DU_comparisons[,20],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+FA_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,7], orig_DU_comparisons[,6],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+FA_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,19], orig_DU_comparisons[,18],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### BA
+### SOA 200, High Load
+BA_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,5], orig_DU_comparisons[,4],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+BA_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,17], orig_DU_comparisons[,16],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+BA_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,3], orig_DU_comparisons[,2],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+BA_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,15], orig_DU_comparisons[,14],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SYM
+### SOA 200, High Load
+SYM_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,13], orig_DU_comparisons[,12],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+SYM_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,25], orig_DU_comparisons[,24],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+SYM_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,11], orig_DU_comparisons[,10],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+SYM_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,23], orig_DU_comparisons[,22],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3)
+)
+
+## Replication study experiment 2, Dutch
+Repli_DU_effects <- list(
+### FA
+### SOA 200, High Load
+FA_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,9], repli_DU_comparisons[,8],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+FA_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,21], repli_DU_comparisons[,20],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+FA_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,7], repli_DU_comparisons[,6],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+FA_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,19], repli_DU_comparisons[,18],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### BA
+### SOA 200, High Load
+BA_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,5], repli_DU_comparisons[,4],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+BA_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,17], repli_DU_comparisons[,16],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+BA_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,3], repli_DU_comparisons[,2],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+BA_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,15], repli_DU_comparisons[,14],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SYM
+### SOA 200, High Load
+SYM_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,13], repli_DU_comparisons[,12],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+SYM_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,25], repli_DU_comparisons[,24],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+SYM_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,11], repli_DU_comparisons[,10],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+SYM_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,23], repli_DU_comparisons[,22],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3)
+)
+
+## Replication Study, Experiment 1 English
+Repli_EN_effects <- list(
+### FA
+### SOA 200, High Load
+FA_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,9], repli_EN_comparisons[,8],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+FA_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,21], repli_EN_comparisons[,20],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+FA_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,7], repli_EN_comparisons[,6],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+FA_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,19], repli_EN_comparisons[,18],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### BA
+### SOA 200, High Load
+BA_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,5], repli_EN_comparisons[,4],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+BA_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,17], repli_EN_comparisons[,16],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+BA_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,3], repli_EN_comparisons[,2],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+BA_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,15], repli_EN_comparisons[,14],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SYM
+### SOA 200, High Load
+SYM_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,13], repli_EN_comparisons[,12],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+SYM_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,25], repli_EN_comparisons[,24],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+SYM_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,11], repli_EN_comparisons[,10],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+SYM_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,23], repli_EN_comparisons[,22],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3)
+)
+```
+
+|| SOA 200, High Load | SOA 200, Low Load | SOA 2000, High Load | SOA 2000, Low Load|
+| --- | --- | --- | --- | --- |
+|**FA pairs**|||||
+|Original Dutch|`r paste( Orig_DU_effects$FA_LSOA_HLOAD[3], (if(Orig_DU_effects$FA_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$FA_LSOA_LLOAD[3], (if(Orig_DU_effects$FA_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$FA_HSOA_HLOAD[3], (if(Orig_DU_effects$FA_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$FA_HSOA_LLOAD[3], (if(Orig_DU_effects$FA_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+|English Replication|`r paste( Repli_EN_effects$FA_LSOA_HLOAD[3], (if(Repli_EN_effects$FA_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$FA_LSOA_LLOAD[3], (if(Repli_EN_effects$FA_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$FA_HSOA_HLOAD[3], (if(Repli_EN_effects$FA_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$FA_HSOA_LLOAD[3], (if(Repli_EN_effects$FA_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+|Dutch Replication|`r paste( Repli_DU_effects$FA_LSOA_HLOAD[3], (if(Repli_DU_effects$FA_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$FA_LSOA_LLOAD[3], (if(Repli_DU_effects$FA_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$FA_HSOA_HLOAD[3], (if(Repli_DU_effects$FA_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$FA_HSOA_LLOAD[3], (if(Repli_DU_effects$FA_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+|**BA pairs**|||||
+|Original Dutch|`r paste( Orig_DU_effects$BA_LSOA_HLOAD[3], (if(Orig_DU_effects$BA_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$BA_LSOA_LLOAD[3], (if(Orig_DU_effects$BA_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$BA_HSOA_HLOAD[3], (if(Orig_DU_effects$BA_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$BA_HSOA_LLOAD[3], (if(Orig_DU_effects$BA_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+|English Replication|`r paste( Repli_EN_effects$BA_LSOA_HLOAD[3], (if(Repli_EN_effects$BA_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$BA_LSOA_LLOAD[3], (if(Repli_EN_effects$BA_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$BA_HSOA_HLOAD[3], (if(Repli_EN_effects$BA_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$BA_HSOA_LLOAD[3], (if(Repli_EN_effects$BA_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+|Dutch Replication|`r paste( Repli_DU_effects$BA_LSOA_HLOAD[3], (if(Repli_DU_effects$BA_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$BA_LSOA_LLOAD[3], (if(Repli_DU_effects$BA_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$BA_HSOA_HLOAD[3], (if(Repli_DU_effects$BA_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$BA_HSOA_LLOAD[3], (if(Repli_DU_effects$BA_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+|**SYM pairs**|||||
+|Original Dutch|`r paste( Orig_DU_effects$SYM_LSOA_HLOAD[3], (if(Orig_DU_effects$SYM_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$SYM_LSOA_LLOAD[3], (if(Orig_DU_effects$SYM_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$SYM_HSOA_HLOAD[3], (if(Orig_DU_effects$SYM_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$SYM_HSOA_LLOAD[3], (if(Orig_DU_effects$SYM_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+|English Replication|`r paste( Repli_EN_effects$SYM_LSOA_HLOAD[3], (if(Repli_EN_effects$SYM_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$SYM_LSOA_LLOAD[3], (if(Repli_EN_effects$SYM_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$SYM_HSOA_HLOAD[3], (if(Repli_EN_effects$SYM_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$SYM_HSOA_LLOAD[3], (if(Repli_EN_effects$SYM_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+|Dutch Replication|`r paste( Repli_DU_effects$SYM_LSOA_HLOAD[3], (if(Repli_DU_effects$SYM_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$SYM_LSOA_LLOAD[3], (if(Repli_DU_effects$SYM_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$SYM_HSOA_HLOAD[3], (if(Repli_DU_effects$SYM_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$SYM_HSOA_LLOAD[3], (if(Repli_DU_effects$SYM_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+
+
+After read the 2017 study, I'm thinking did the 2015 story is crashed by the unsuccessful replication? To clarify my question, the priming effects and their statistical significance signals are summarized in the above table. It shows the inconsistencies between the original and the replications happened to several conditions. However, if we counted on the null-hypothesis significance testing, the conclusion we can make is to agree the spreading activation being unable to predict and explain all the matters of semantic priming paradigm. 
+
+The Bayesian analysis on the joint data of the three studies indicated that only the forward associative priming effect at long SOA is failed to be replicated (Check [Table 4 of 2017 study](https://www.collabra.org/article/10.1525/collabra.96/#T4)). What we learned from the Bayes factors are how weak evidence value they found in 2015. The joing analysis has yet told us in which conditions the replicated results are definately unlike the origianl results? And in which condition the language knowledges contributed to the diversed fidnings? To answer these questions could help understand is this unsuccesfuly replication due to the problems of methodology or theory.
+
+### Are the replicated results as equivalent as the original results?
+
+To find the answers, I plotted the analysis plan evaluated the equivalence of each condition of replicated priming effect and original priming effect. The evaluation method is the [two one-sided tests(TOST)](http://journals.sagepub.com/doi/10.1177/1948550617697177). In ues of TOST, my questions are transfered to three true/false statement: (1)When both the original and replicted results are singificant or insignificant (e.g., *short SOA, high working memory load, forward association*), are the repicated priming effects equal to the original priming effects? (2) When the original result is significant but the replicated reuslt is insgificant (e.g., *the backward association and the symmetric association in English replication*), are the replicated priming effects lower than the original priming effects? (3) When the original result is insignificant but the replicated result is insignificant (e.g., *long SOA, high working memory load, forward association*), are the replicated priming effects higher than the original priming effects?
+
+According to [rPsychologist's visualization](http://rpsychologist.com/d3/equivalence/), TOST could give five decision marks: *equivalence*, *superior*, *inferior*, *non-inferior*, and *inconclusive*. These marks illustrate the status of the observed effect given the equivalence margins. In this case, the observed effects are the replicated priming effects, and the margins are the confidence interval of original priming effects. Thus, *equivalence* represents that the replicated priming effect is within the margins; *non-inferior* represents that the interval of replicated priming effect is a little higher than the margins. For the observed confidence interval that is higher/lower than the margins, *superior* refers to the averaged replicated priming effect that is higher the upper margin; *inferor* refers to the averaged replicated priming effect that is that is lower than the lower margin. Otherwise the observed effect is *inconclusive*. 
+
+### Reanalysis of the original and replication data
+
+[**Press here and check the code**](https://osf.io/6khpq/)
+
+The alpha level of my TOST follows the 2017 replication (.05). The other arguments are the directly computed results of the raw data. The evaluations are listed as the below table.
+
+```{r TOST_table, message=FALSE, warning=FALSE, include=FALSE}
+
+osfr::download('xdvwn')
+
+load('WM_TOST.RData')
+```
+
+|| SOA 200, High Load | SOA 200, Low Load | SOA 2000, High Load | SOA 2000, Low Load|
+| --- | --- | --- | --- | --- |
+|**FA pairs**|||||
+|English replication|`r unlist(repli_EN_TOST_results)["repli_EN_FA_LSOA_HLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_FA_LSOA_LLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_FA_HSOA_HLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_FA_HSOA_LLOAD_TOST"]`|
+|Dutch replication|`r unlist(repli_DU_TOST_results)["repli_DU_FA_LSOA_HLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_FA_LSOA_LLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_FA_HSOA_HLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_FA_HSOA_LLOAD_TOST"]`|
+|**BA pairs**|||||
+|English replication|`r unlist(repli_EN_TOST_results)["repli_EN_BA_LSOA_HLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_BA_LSOA_LLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_BA_HSOA_HLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_BA_HSOA_LLOAD_TOST"]`|
+|Dutch replication|`r unlist(repli_DU_TOST_results)["repli_DU_BA_LSOA_HLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_BA_LSOA_LLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_BA_HSOA_HLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_BA_HSOA_LLOAD_TOST"]`|
+|**SYM pairs**|||||
+|English replication|`r unlist(repli_EN_TOST_results)["repli_EN_SYM_LSOA_HLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_SYM_LSOA_LLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_SYM_HSOA_HLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_SYM_HSOA_LLOAD_TOST"]`|
+|Dutch replication|`r unlist(repli_DU_TOST_results)["repli_DU_SYM_LSOA_HLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_SYM_LSOA_LLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_SYM_HSOA_HLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_SYM_HSOA_LLOAD_TOST"]`|
+
+The replication studies indeed confirmed the large magnitude of the forward associative priming effect in the long SOA. This means that the forward association could not be inhibited when the prime has presented for two seconds. Many English replicated priming effects are not inferior to the original reuslts, and many Dutch replicated priming effects are equivalent with the original results. These marks show that the slight difference between languages probably caused the insignificant results in many conditions. One noticeable condition is the symmetic associative priming effect in the high working memory load, long SOA. English replicated priming effect is lower than the original result, but Dutch replicated priming effect is not as low as English replication. This may be a signal for more direct replications between languages. 
+
+### Is spreading activation a fasifiable theory?
+
+The earlier semantic priming studies have supported the developing theories of spreading activation. On the other hand, the updated theories inspired many kinds of modified semantic priming paradigm and naive findings. The core of spreading activation is the unconscious conceptual processing with the latest sufficient attentional resource. This theory could make the valid prediction only for the forward association at short SOA. The other types of semantic relations and the longer SOA conditions requrie the alternative accounts to give the valid explaination and prediction. Thus 2015 study challenged the alternative accounts, then 2017 replication indicated the failure of this challenge. 
+Obviously the core of spreading activation have not been shaked by etiher 2015 study or 2017 replication. We could ask if both the studies increase the [truth-likeness or verisimilitude](http://daniellakens.blogspot.tw/2017/06/verisimilitude-belief-and-progress-in.html) of spreading activation. Although there are many good review articles about the theories and findings of semantic priming, one could develop the evaluation system to guide the theory construction based on thses cases.

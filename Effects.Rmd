@@ -1,0 +1,147 @@
+---
+date: '2017-08-29'
+---
+## Table
+```{r effects, message=FALSE, warning=FALSE, include=FALSE}
+library(osfr)
+## library(TOSTER)
+
+## Import the priming efffects data
+orig_DU_osf <- osfr::download(id = '9n587')
+orig_DU_comparisons <- read.csv("orig_DU.csv")
+repli_DU_osf <- osfr::download(id = '6ctyx')
+repli_DU_comparisons <- read.csv("repli_DU.csv")
+repli_EN_osf <- osfr::download(id = '8f5uq')
+repli_EN_comparisons <- read.csv("repli_EN.csv")
+
+## original_study
+## t test and CI of each original priming effect
+Orig_DU_effects <- list(
+### FA
+### SOA 200, High Load
+FA_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,9], orig_DU_comparisons[,8],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+FA_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,21], orig_DU_comparisons[,20],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+FA_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,7], orig_DU_comparisons[,6],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+FA_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,19], orig_DU_comparisons[,18],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### BA
+### SOA 200, High Load
+BA_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,5], orig_DU_comparisons[,4],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+BA_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,17], orig_DU_comparisons[,16],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+BA_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,3], orig_DU_comparisons[,2],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+BA_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,15], orig_DU_comparisons[,14],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SYM
+### SOA 200, High Load
+SYM_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,13], orig_DU_comparisons[,12],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+SYM_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,25], orig_DU_comparisons[,24],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+SYM_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,11], orig_DU_comparisons[,10],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+SYM_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(orig_DU_comparisons[,23], orig_DU_comparisons[,22],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3)
+)
+
+## Replication study experiment 2, Dutch
+Repli_DU_effects <- list(
+### FA
+### SOA 200, High Load
+FA_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,9], repli_DU_comparisons[,8],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+FA_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,21], repli_DU_comparisons[,20],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+FA_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,7], repli_DU_comparisons[,6],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+FA_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,19], repli_DU_comparisons[,18],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### BA
+### SOA 200, High Load
+BA_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,5], repli_DU_comparisons[,4],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+BA_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,17], repli_DU_comparisons[,16],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+BA_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,3], repli_DU_comparisons[,2],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+BA_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,15], repli_DU_comparisons[,14],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SYM
+### SOA 200, High Load
+SYM_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,13], repli_DU_comparisons[,12],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+SYM_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,25], repli_DU_comparisons[,24],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+SYM_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,11], repli_DU_comparisons[,10],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+SYM_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_DU_comparisons[,23], repli_DU_comparisons[,22],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3)
+)
+
+## Replication Study, Experiment 1 English
+Repli_EN_effects <- list(
+### FA
+### SOA 200, High Load
+FA_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,9], repli_EN_comparisons[,8],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+FA_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,21], repli_EN_comparisons[,20],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+FA_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,7], repli_EN_comparisons[,6],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+FA_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,19], repli_EN_comparisons[,18],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### BA
+### SOA 200, High Load
+BA_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,5], repli_EN_comparisons[,4],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+BA_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,17], repli_EN_comparisons[,16],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+BA_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,3], repli_EN_comparisons[,2],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+BA_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,15], repli_EN_comparisons[,14],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SYM
+### SOA 200, High Load
+SYM_LSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,13], repli_EN_comparisons[,12],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 200, Low Load
+SYM_LSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,25], repli_EN_comparisons[,24],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, High Load
+SYM_HSOA_HLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,11], repli_EN_comparisons[,10],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3),
+### SOA 2000, Low Load
+SYM_HSOA_LLOAD = round(c( as.numeric( unlist(t.test(repli_EN_comparisons[,23], repli_EN_comparisons[,22],paired = TRUE))[c(1,2,6,4,5,3)])), digits = 3)
+)
+```
+
+|| SOA 200, High Load | SOA 200, Low Load | SOA 2000, High Load | SOA 2000, Low Load|
+| --- | --- | --- | --- | --- |
+|**FA pairs**|||||
+|Original Dutch|`r paste( Orig_DU_effects$FA_LSOA_HLOAD[3], (if(Orig_DU_effects$FA_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$FA_LSOA_LLOAD[3], (if(Orig_DU_effects$FA_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$FA_HSOA_HLOAD[3], (if(Orig_DU_effects$FA_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$FA_HSOA_LLOAD[3], (if(Orig_DU_effects$FA_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+|English Replication|`r paste( Repli_EN_effects$FA_LSOA_HLOAD[3], (if(Repli_EN_effects$FA_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$FA_LSOA_LLOAD[3], (if(Repli_EN_effects$FA_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$FA_HSOA_HLOAD[3], (if(Repli_EN_effects$FA_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$FA_HSOA_LLOAD[3], (if(Repli_EN_effects$FA_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+|Dutch Replication|`r paste( Repli_DU_effects$FA_LSOA_HLOAD[3], (if(Repli_DU_effects$FA_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$FA_LSOA_LLOAD[3], (if(Repli_DU_effects$FA_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$FA_HSOA_HLOAD[3], (if(Repli_DU_effects$FA_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$FA_HSOA_LLOAD[3], (if(Repli_DU_effects$FA_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+|**BA pairs**|||||
+|Original Dutch|`r paste( Orig_DU_effects$BA_LSOA_HLOAD[3], (if(Orig_DU_effects$BA_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$BA_LSOA_LLOAD[3], (if(Orig_DU_effects$BA_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$BA_HSOA_HLOAD[3], (if(Orig_DU_effects$BA_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$BA_HSOA_LLOAD[3], (if(Orig_DU_effects$BA_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+|English Replication|`r paste( Repli_EN_effects$BA_LSOA_HLOAD[3], (if(Repli_EN_effects$BA_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$BA_LSOA_LLOAD[3], (if(Repli_EN_effects$BA_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$BA_HSOA_HLOAD[3], (if(Repli_EN_effects$BA_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$BA_HSOA_LLOAD[3], (if(Repli_EN_effects$BA_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+|Dutch Replication|`r paste( Repli_DU_effects$BA_LSOA_HLOAD[3], (if(Repli_DU_effects$BA_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$BA_LSOA_LLOAD[3], (if(Repli_DU_effects$BA_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$BA_HSOA_HLOAD[3], (if(Repli_DU_effects$BA_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$BA_HSOA_LLOAD[3], (if(Repli_DU_effects$BA_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+|**SYM pairs**|||||
+|Original Dutch|`r paste( Orig_DU_effects$SYM_LSOA_HLOAD[3], (if(Orig_DU_effects$SYM_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$SYM_LSOA_LLOAD[3], (if(Orig_DU_effects$SYM_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$SYM_HSOA_HLOAD[3], (if(Orig_DU_effects$SYM_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Orig_DU_effects$SYM_HSOA_LLOAD[3], (if(Orig_DU_effects$SYM_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+|English Replication|`r paste( Repli_EN_effects$SYM_LSOA_HLOAD[3], (if(Repli_EN_effects$SYM_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$SYM_LSOA_LLOAD[3], (if(Repli_EN_effects$SYM_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$SYM_HSOA_HLOAD[3], (if(Repli_EN_effects$SYM_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_EN_effects$SYM_HSOA_LLOAD[3], (if(Repli_EN_effects$SYM_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+|Dutch Replication|`r paste( Repli_DU_effects$SYM_LSOA_HLOAD[3], (if(Repli_DU_effects$SYM_LSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$SYM_LSOA_LLOAD[3], (if(Repli_DU_effects$SYM_LSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$SYM_HSOA_HLOAD[3], (if(Repli_DU_effects$SYM_HSOA_HLOAD[6]< .05){"*"}else{"n.s."}))`|`r paste( Repli_DU_effects$SYM_HSOA_LLOAD[3], (if(Repli_DU_effects$SYM_HSOA_LLOAD[6]< .05){"*"}else{"n.s."}))`|
+
+
+```{r TOST_table, message=FALSE, warning=FALSE, include=FALSE}
+
+osfr::download('xdvwn')
+
+load('WM_TOST.RData')
+```
+
+|| SOA 200, High Load | SOA 200, Low Load | SOA 2000, High Load | SOA 2000, Low Load|
+| --- | --- | --- | --- | --- |
+|**FA pairs**|||||
+|English replication|`r unlist(repli_EN_TOST_results)["repli_EN_FA_LSOA_HLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_FA_LSOA_LLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_FA_HSOA_HLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_FA_HSOA_LLOAD_TOST"]`|
+|Dutch replication|`r unlist(repli_DU_TOST_results)["repli_DU_FA_LSOA_HLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_FA_LSOA_LLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_FA_HSOA_HLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_FA_HSOA_LLOAD_TOST"]`|
+|**BA pairs**|||||
+|English replication|`r unlist(repli_EN_TOST_results)["repli_EN_BA_LSOA_HLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_BA_LSOA_LLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_BA_HSOA_HLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_BA_HSOA_LLOAD_TOST"]`|
+|Dutch replication|`r unlist(repli_DU_TOST_results)["repli_DU_BA_LSOA_HLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_BA_LSOA_LLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_BA_HSOA_HLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_BA_HSOA_LLOAD_TOST"]`|
+|**SYM pairs**|||||
+|English replication|`r unlist(repli_EN_TOST_results)["repli_EN_SYM_LSOA_HLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_SYM_LSOA_LLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_SYM_HSOA_HLOAD_TOST"]`|`r unlist(repli_EN_TOST_results)["repli_EN_SYM_HSOA_LLOAD_TOST"]`|
+|Dutch replication|`r unlist(repli_DU_TOST_results)["repli_DU_SYM_LSOA_HLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_SYM_LSOA_LLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_SYM_HSOA_HLOAD_TOST"]`|`r unlist(repli_DU_TOST_results)["repli_DU_SYM_HSOA_LLOAD_TOST"]`|
+
+
